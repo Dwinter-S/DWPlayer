@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>mp3</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>七里香伴奏</string>
+			<key>url</key>
+			<string>https://wsaudiobssdlbig.yun.kugou.com/202305041741/79f2643adf09851a4a406ee1e334b4f8/bss/extname/wsaudio/7577ec70232663b700652fa03318e05d.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>告白气球伴奏</string>
+			<key>url</key>
+			<string>https://wsaudiobssdlbig.yun.kugou.com/202305041745/54212c0d3d9d6be4fff76233071dbf23/bss/extname/wsaudio/46ef81ca6587d26e629f69d8cde3352e.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>晴天伴奏</string>
+			<key>url</key>
+			<string>https://wsaudiobssdlbig.yun.kugou.com/202305041745/8335df57d8f8399dc34aea8f7eff0bf8/bss/extname/wsaudio/7b7980ba40447cad7661e33a5b47d830.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>一路向北伴奏</string>
+			<key>url</key>
+			<string>https://wsaudiobssdlbig.yun.kugou.com/202305041746/6a102211fbdf1f3bef787af9d4d2f3a3/bss/extname/wsaudio/fbd82f383685ac20f1319eefb12a3a5e.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>青花瓷伴奏</string>
+			<key>url</key>
+			<string>https://wsaudiobssdlbig.yun.kugou.com/202305041746/e28ae01cdc5e416455c84eb47be2175c/bss/extname/wsaudio/efad20d718e7cbbdefc71e55a62cff93.mp3</string>
+		</dict>
+	</array>
+	<key>mp4</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>山中岁月</string>
+			<key>url</key>
+			<string>https://wsvideobssdlbig.yun.kugou.com/202305041748/6fda0caf137fe49d7341cdf2bdd82b17/ad7f297d802dfa9749e91743be5df527.mp4</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>盗笔同人曲《往期》</string>
+			<key>url</key>
+			<string>https://wsvideobssdlbig.yun.kugou.com/202305041748/d326324e3a2dd17af2b81027922df002/3237fa87c51afe4854f53a9223f37bcf.mp4</string>
+		</dict>
+	</array>
+</dict>
+</plist>
