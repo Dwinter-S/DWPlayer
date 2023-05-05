@@ -42,14 +42,22 @@ class ConstraintsGenerator {
         }
         var constraints = [NSLayoutConstraint]()
         if let toItem = toItem {
-            let xAxisConstraints = fromItem.xAnchors.map({ type, anchor in
-                return self.constraint(from: anchor, relation: self.relation, to: toItem.xAnchors[type]!, constant: self.finalConstant(with: type), priority: priority)
+            
+            let xAxisConstraints = fromItem.xAnchors.map({ (type, anchor) in
+//                let toAnchor = toItem.xAnchors[index]
+                let isMixed = self.fromItem.attrType == .mixed
+                let toAnchor = isMixed ? toItem.xAnchors[type]! : toItem.xAnchors.map({ $0.value })[0]
+                return self.constraint(from: anchor, relation: self.relation, to: toAnchor, constant: self.finalConstant(with: type), priority: priority)
             })
             let yAxisConstraints = fromItem.yAnchors.map({ type, anchor in
-                return self.constraint(from: anchor, relation: self.relation, to: toItem.yAnchors[type]!, constant: self.finalConstant(with: type), priority: priority)
+                let isMixed = self.fromItem.attrType == .mixed
+                let toAnchor = isMixed ? toItem.yAnchors[type]! : toItem.yAnchors.map({ $0.value })[0]
+                return self.constraint(from: anchor, relation: self.relation, to: toAnchor, constant: self.finalConstant(with: type), priority: priority)
             })
             let dimensionConstraints = fromItem.dimensions.map({ type, anchor in
-                return self.constraint(from: anchor, relation: self.relation, to: toItem.dimensions[type]!, constant: self.finalConstant(with: type), priority: priority)
+                let isMixed = self.fromItem.attrType == .mixed
+                let toAnchor = isMixed ? toItem.dimensions[type]! : toItem.dimensions.map({ $0.value })[0]
+                return self.constraint(from: anchor, relation: self.relation, to: toAnchor, constant: self.finalConstant(with: type), priority: priority)
             })
             constraints = xAxisConstraints + yAxisConstraints + dimensionConstraints
         } else {
@@ -224,6 +232,12 @@ class ConstraintsGenerator {
             }
         }
         return true
+
+//        if let toItem = toItem {
+//            return fromItem ~= toItem
+//        } else {
+//            return fromItem.attr == .width || fromItem.attr == .height
+//        }
     }
     
 }

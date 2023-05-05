@@ -139,7 +139,8 @@ class LoadingRequestProcessor: NSObject {
         if let httpResponse = response as? HTTPURLResponse {
             let contentInfomation = ResourceContentInfomation()
             let acceptRange = httpResponse.allHeaderFields["Accept-Ranges"] as? String
-            contentInfomation.isByteRangeAccessSupported = acceptRange == "bytes"
+//            contentInfomation.isByteRangeAccessSupported = acceptRange == "bytes"
+            contentInfomation.isByteRangeAccessSupported = true
             var contentLength = 0
             var contentRange = httpResponse.allHeaderFields["content-range"] as? String
             contentRange = contentRange ?? httpResponse.allHeaderFields["Content-Range"] as? String

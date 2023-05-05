@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         setupPlayer()
         setupSlider()
         test()
+        MediaCache.default.diskCache.clearDiskCache()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -20,7 +20,6 @@ class MediaListCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        cacheProgresssView.backgroundColor = .lightGray
         contentView.addSubview(titleLabel)
         contentView.addSubview(cacheProgresssView)
         titleLabel.dwc.addConstraints {
@@ -56,6 +55,8 @@ class MediaListCell: UITableViewCell {
 }
 
 class CacheProgresssView: UIView {
+    
+    var ranges: [Range<CGFloat>] = []
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -67,12 +68,13 @@ class CacheProgresssView: UIView {
     }
     
     func commonInit() {
-        
+        backgroundColor = .lightGray
+        clipsToBounds = true
     }
     
-    
-    
-    func setCacheRanges(_ ranges: [Range<CGFloat>]) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.height / 2
         subviews.forEach({ $0.removeFromSuperview() })
         for range in ranges {
             let view = UIView()
@@ -82,5 +84,10 @@ class CacheProgresssView: UIView {
             let fragmentWidth = bounds.width * (range.upperBound - range.lowerBound)
             view.frame = CGRect(x: left, y: 0, width: fragmentWidth, height: bounds.height)
         }
+    }
+    
+    func setCacheRanges(_ ranges: [Range<CGFloat>]) {
+        self.ranges = ranges
+        setNeedsLayout()
     }
 }

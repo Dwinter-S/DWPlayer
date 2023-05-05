@@ -105,7 +105,9 @@ class MediaCacheProcessor {
             self.writeFileHandle?.synchronizeFile()
             do {
               try MediaCache.default.db?.insertCachedFileInfo(info: self.cachedFileInfomation)
-                NotificationCenter.default.post(name: Notification.Name.CachedPercentRangesDidChanged, object: nil, userInfo: ["url": self.url.absoluteString, "ranges" : self.cachedFileInfomation.cachedPercentRanges])
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name.CachedPercentRangesDidChanged, object: nil, userInfo: ["url": self.url.absoluteString, "ranges" : self.cachedFileInfomation.cachedPercentRanges])
+                }
                 print("?????CachedPercentRangesDidChanged \(self.cachedFileInfomation.cachedPercentRanges)")
             } catch {
                 print("保存数据库失败\(error)")

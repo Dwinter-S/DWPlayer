@@ -235,6 +235,7 @@ class DWPlayer: NSObject {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let keyPath = keyPath, let change = change else { return }
         let newValue = change[.newKey]
+        print("????????\(keyPath) \(newValue)")
         if context == &playerItemContext {
             if keyPath == #keyPath(AVPlayerItem.duration) {
                 if let newDuration = newValue as? CMTime {
@@ -283,7 +284,7 @@ class DWPlayer: NSObject {
             }
             
             if keyPath == #keyPath(AVPlayerItem.isPlaybackBufferEmpty) {
-                delegate?.startBuffering(player.currentItem)
+//                delegate?.startBuffering(player.currentItem)
             }
             
             if keyPath == #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp) {

@@ -31,14 +31,6 @@ class ConstraintItem {
         case mixed
     }
     
-    let item: UIView
-    let attr: Attribute
-    
-    init(item: UIView, attr: Attribute) {
-        self.item = item
-        self.attr = attr
-    }
-    
     var attrType: AttributeType {
         switch attr {
         case .left, .right, .leading, .trailing, .centerX:
@@ -50,6 +42,33 @@ class ConstraintItem {
         default:
             return .mixed
         }
+    }
+
+    
+//    enum LayoutAnchor {
+//        case xAxis(NSLayoutXAxisAnchor)
+//        case yAxis(NSLayoutYAxisAnchor)
+//        case dimension(NSLayoutDimension)
+//        static func ~= (lhs: Self, rhs: Self) -> Bool {
+//            switch (lhs, rhs) {
+//            case
+//                (.xAxis, .xAxis),
+//                (.yAxis, .yAxis),
+//                (.dimension, .dimension):
+//                return true
+//
+//            default:
+//                return false
+//            }
+//        }
+//    }
+    
+    let item: UIView
+    let attr: Attribute
+    
+    init(item: UIView, attr: Attribute) {
+        self.item = item
+        self.attr = attr
     }
     
     var xAnchors: [Attribute: NSLayoutXAxisAnchor] {
@@ -95,10 +114,52 @@ class ConstraintItem {
         default: return [:]
         }
     }
+
     
-    func insetConstant(with constant: CGFloat) {
-        
-    }
+//    lazy var layoutAnchors: [LayoutAnchor] = {
+//        switch attr {
+//        case .left:
+//            return [.xAxis(item.leftAnchor)]
+//        case .right:
+//            return [.xAxis(item.rightAnchor)]
+//        case .leading:
+//            return [.xAxis(item.leadingAnchor)]
+//        case .trailing:
+//            return [.xAxis(item.trailingAnchor)]
+//        case .centerX:
+//            return [.xAxis(item.centerXAnchor)]
+//            
+//        case .top:
+//            return [.yAxis(item.topAnchor)]
+//        case .bottom:
+//            return [.yAxis(item.bottomAnchor)]
+//        case .centerY:
+//            return [.yAxis(item.centerYAnchor)]
+//        case .firstBaseline:
+//            return [.yAxis(item.firstBaselineAnchor)]
+//        case .lastBaseline:
+//            return [.yAxis(item.lastBaselineAnchor)]
+//            
+//        case .width:
+//            return [.dimension(item.widthAnchor)]
+//        case .height:
+//            return [.dimension(item.heightAnchor)]
+//            
+//        case .edges:
+//            return [.xAxis(item.leftAnchor), .xAxis(item.rightAnchor), .yAxis(item.topAnchor), .yAxis(item.bottomAnchor)]
+//        case .center:
+//            return [.xAxis(item.centerXAnchor), .yAxis(item.centerYAnchor)]
+//        }
+//    }()
+//    
+//    static func ~= (lhs: ConstraintItem, rhs: ConstraintItem) -> Bool {
+//        guard lhs.layoutAnchors.count == rhs.layoutAnchors.count else { return false }
+//        if lhs.layoutAnchors.count == 1 {
+//            return lhs.layoutAnchors[0] ~= rhs.layoutAnchors[0]
+//        } else {
+//            return lhs.attr == rhs.attr
+//        }
+//    }
     
 }
 
