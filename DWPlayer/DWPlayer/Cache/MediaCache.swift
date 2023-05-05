@@ -16,8 +16,14 @@ class MediaCache {
     init(diskConfig: DiskConfig) {
         self.diskCache = DiskCache(config: diskConfig)
     }
+    
+    func localCache(with url: URL) -> CachedFileInfomation? {
+        return db?.cachedFileInfomation(url: url.absoluteString.md5)
+    }
+    
 }
-struct DiskCache {
+
+class DiskCache {
     let config: DiskConfig
     var directory: URL
     let fileManager = FileManager.default
@@ -33,6 +39,12 @@ struct DiskCache {
                 
             }
         }
+        self.ioQueue = DispatchQueue(label: "com.dwinters.CachingPlayerItem.MediaCache.ioQueue.\(config.name)")
+        openDB()
+        cleanExpiredDiskCache()
+    }
+    
+    private func openDB() {
         let dbURL = self.directory.appendingPathComponent("cache.sqlite")
         if !FileManager.default.fileExists(atPath: dbURL.absoluteString) {
             FileManager.default.createFile(atPath: dbURL.absoluteString, contents: nil)
@@ -42,8 +54,6 @@ struct DiskCache {
             try db?.createTable(table: CachedFileInfomation.self)
         } catch {
         }
-        self.ioQueue = DispatchQueue(label: "com.dwinters.CachingPlayerItem.MediaCache.ioQueue.\(config.name)")
-        cleanExpiredDiskCache()
     }
     
     func clearDiskCache(completion handler: (()->())? = nil) {
@@ -51,7 +61,7 @@ struct DiskCache {
             do {
                 try self.fileManager.removeItem(at: self.directory)
                 try self.fileManager.createDirectory(at: self.directory, withIntermediateDirectories: true)
-                try self.db?.deleteAllCachedFileInfomation()
+                self.openDB()
             } catch {}
             
             if let handler = handler {

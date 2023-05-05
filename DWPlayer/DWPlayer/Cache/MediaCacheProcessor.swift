@@ -7,12 +7,15 @@
 
 import Foundation
 
+extension Notification.Name {
+    public static let CachedPercentRangesDidChanged = NSNotification.Name("CachedPercentRangesDidChanged")
+}
+
 class MediaCacheProcessor {
     let url: URL
     let cachedFileURL: URL
-    let cachedFileInfomationURL: URL
     let cachedFileInfomation: CachedFileInfomation
-
+    
     private var fileManager = FileManager.default
     private var writeFileHandle: FileHandle?
     private var readFileHandle: FileHandle?
@@ -24,18 +27,8 @@ class MediaCacheProcessor {
         let cacheDirectory = MediaCache.default.diskCache.directory
         let urlMd5 = url.absoluteString.md5
         self.cachedFileURL = cacheDirectory.appendingPathComponent(urlMd5).appendingPathExtension(url.pathExtension)
-        self.cachedFileInfomationURL = cacheDirectory.appendingPathComponent(urlMd5).appendingPathExtension("cfi")
-//        if fileManager.fileExists(atPath: cachedFileInfomationURL.path),
-//           let data = fileManager.contents(atPath: cachedFileInfomationURL.path),
-//           let value = try? JSONDecoder().decode(CachedFileInfomation.self, from: data) {
-//            self.cachedFileInfomation = value
-//            print("json:\(value.toJson())")
-//        } else {
-//            self.cachedFileInfomation = CachedFileInfomation(url: url)
-//        }
-        if let value = MediaCache.default.db?.cachedFileInfomation(url: url.absoluteString.md5) {
+        if let value = MediaCache.default.localCache(with: url) {
             self.cachedFileInfomation = value
-            print("获取本地数据：\(value.cachedFragments)")
         } else {
             self.cachedFileInfomation = CachedFileInfomation(url: url)
         }
@@ -112,10 +105,11 @@ class MediaCacheProcessor {
             self.writeFileHandle?.synchronizeFile()
             do {
               try MediaCache.default.db?.insertCachedFileInfo(info: self.cachedFileInfomation)
+                NotificationCenter.default.post(name: Notification.Name.CachedPercentRangesDidChanged, object: nil, userInfo: ["url": self.url.absoluteString, "ranges" : self.cachedFileInfomation.cachedPercentRanges])
+                print("?????CachedPercentRangesDidChanged \(self.cachedFileInfomation.cachedPercentRanges)")
             } catch {
                 print("保存数据库失败\(error)")
             }
-//            self.cachedFileInfomation.writeToFile(self.cachedFileInfomationURL)
         }
     }
 }

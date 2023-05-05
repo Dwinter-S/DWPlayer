@@ -17,45 +17,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var playerView: ListVideoPlayerView!
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var mp3ListTableView: UITableView!
-    @IBOutlet weak var mp4ListTableView: UITableView!
-    
-    let testView = UIView()
-    
-    lazy var mediaDict: [String : [[String : String]]] = {
-        let url = Bundle.main.url(forResource: "MediaList", withExtension: "plist")!
-        if let data = try? Data(contentsOf: url),
-           let dict = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String : [[String : String]]] {
-            return dict
-        }
-        return [:]
-    }()
-    
-    lazy var mp3Medias: [Media] = {
-        return getMeidas(with: "mp3")
-    }()
-    
-    lazy var mp4Medias: [Media] = {
-        return getMeidas(with: "mp4")
-    }()
-    
-    func getMeidas(with key: String) -> [Media] {
-        let arr = mediaDict[key] ?? []
-        var medias = [Media]()
-        for dict in arr {
-            let media = Media(name: dict["name"], url: dict["url"])
-            medias.append(media)
-        }
-        return medias
-    }
-    
-    var urls = [String]()
+    @IBOutlet weak var mediaListTableView: UITableView!
     
     var rates: [Float] = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
     var curRateIndex = 2
     var curIndex = 0
     var isDraggingSlider = false
+    
+    let medias = MediaManager.shared.allMedias
     
     lazy var player = DWPlayer()
     
@@ -63,11 +32,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupPlayer()
         setupSlider()
-        urls = (mp3Medias + mp4Medias).map({ $0.url ?? "" })
-//        urls = (mp4URLs.prefix(2) + mp3URLs).shuffled()
-        play(at: curIndex)
         test()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,20 +52,20 @@ class ViewController: UIViewController {
     }
 
     @IBAction func playNext(_ sender: Any) {
-        let count = urls.count
-        curIndex += 1
-        if curIndex == count {
-            curIndex = 0
+        let count = medias.count
+        var nextIndex = curIndex + 1
+        if nextIndex == count {
+            nextIndex = 0
         }
-        play(at: curIndex)
+        play(at: nextIndex)
     }
     
     @IBAction func playPre(_ sender: Any) {
-        curIndex -= 1
-        if curIndex == -1 {
-            curIndex = urls.count - 1
+        var preIndex = curIndex - 1
+        if preIndex == -1 {
+            preIndex = medias.count - 1
         }
-        play(at: curIndex)
+        play(at: preIndex)
     }
     
     @IBAction func playOrPause(_ sender: Any) {
@@ -122,7 +87,9 @@ class ViewController: UIViewController {
     }
     
     func play(at index: Int) {
-        let url = URL(string: urls[index])!
+        let media = medias[index]
+        guard let url = URL(string: media.url ?? "") else { return }
+        curIndex = index
         player.play(url: url)
     }
     
@@ -230,19 +197,23 @@ func timing(_ closure: () -> ()) -> Double {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == mp3ListTableView {
-            return mp3Medias.count
-        }
-        return mp4Medias.count
+        return medias.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Playback List"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mediaInfo", for: indexPath)
-        cell.textLabel?.text = tableView == mp3ListTableView ? mp3Medias[indexPath.row].name : mp4Medias[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mediaInfo", for: indexPath) as! MediaListCell
+        let media = medias[indexPath.row]
+        cell.setMediaInfo(media)
+        cell.titleLabel.textColor = curIndex == indexPath.row ? .red : .black
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        play(at: indexPath.row)
+        tableView.reloadData()
     }
 }

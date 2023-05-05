@@ -43,7 +43,8 @@
 		9A7406EC29F7E05C0076BFBC /* Sqlite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7406EB29F7E05C0076BFBC /* Sqlite.swift */; };
 		9A7406EE29F8CFD20076BFBC /* TSqlite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7406ED29F8CFD20076BFBC /* TSqlite.swift */; };
 		9AAF628C2A03B57A0094492C /* MediaList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AAF628B2A03B57A0094492C /* MediaList.plist */; };
-		9AAF628E2A03B8040094492C /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF628D2A03B8040094492C /* Media.swift */; };
+		9AAF628E2A03B8040094492C /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF628D2A03B8040094492C /* MediaManager.swift */; };
+		9AAF62902A04C4D80094492C /* MediaListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF628F2A04C4D80094492C /* MediaListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,7 +86,8 @@
 		9A7406EB29F7E05C0076BFBC /* Sqlite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite.swift; sourceTree = "<group>"; };
 		9A7406ED29F8CFD20076BFBC /* TSqlite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSqlite.swift; sourceTree = "<group>"; };
 		9AAF628B2A03B57A0094492C /* MediaList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MediaList.plist; sourceTree = "<group>"; };
-		9AAF628D2A03B8040094492C /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		9AAF628D2A03B8040094492C /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
+		9AAF628F2A04C4D80094492C /* MediaListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +124,8 @@
 				9A39A0AE29EE491300823C72 /* AppDelegate.swift */,
 				9A39A0B029EE491300823C72 /* SceneDelegate.swift */,
 				9A39A0B229EE491300823C72 /* ViewController.swift */,
-				9AAF628D2A03B8040094492C /* Media.swift */,
+				9AAF628F2A04C4D80094492C /* MediaListCell.swift */,
+				9AAF628D2A03B8040094492C /* MediaManager.swift */,
 				9A7406B829EFF7120076BFBC /* VideoListTableViewController.swift */,
 				9A7406BA29EFF7B40076BFBC /* VideoListCell.swift */,
 				9A7406CD29F53E480076BFBC /* VideoPlayerView.swift */,
@@ -283,7 +286,7 @@
 				9A7406BD29F0D5930076BFBC /* UIViewDSL.swift in Sources */,
 				9A39A0AF29EE491300823C72 /* AppDelegate.swift in Sources */,
 				9A7406B929EFF7120076BFBC /* VideoListTableViewController.swift in Sources */,
-				9AAF628E2A03B8040094492C /* Media.swift in Sources */,
+				9AAF628E2A03B8040094492C /* MediaManager.swift in Sources */,
 				9A7406C229F232570076BFBC /* ConstraintsCreator.swift in Sources */,
 				9A39A0D229EE4C4100823C72 /* MediaCacheProcessor.swift in Sources */,
 				9A39A0B129EE491300823C72 /* SceneDelegate.swift in Sources */,
@@ -298,6 +301,7 @@
 				9A39A0C829EE49F200823C72 /* AssetResourceLoader.swift in Sources */,
 				9A39A0D629EE56EF00823C72 /* RangeExtensions.swift in Sources */,
 				9A7406BB29EFF7B40076BFBC /* VideoListCell.swift in Sources */,
+				9AAF62902A04C4D80094492C /* MediaListCell.swift in Sources */,
 				9A7406B529EFD9BA0076BFBC /* DWVideoPlayerView.swift in Sources */,
 				9A7406D029F53EA50076BFBC /* ListVideoPlayerView.swift in Sources */,
 				9A7406C629F232AE0076BFBC /* ConstraintRelationConverter.swift in Sources */,

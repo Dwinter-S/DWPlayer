@@ -37,15 +37,28 @@ class CachedFileInfomation: Codable {
     }
     
     var cachedPercentsString: String {
-        guard let contentInfomation = contentInfomation else { return "" }
+//        guard let contentInfomation = contentInfomation else { return "" }
+//        let contentLength = CGFloat(contentInfomation.contentLength)
+//        var percentStrs = [String]()
+//        for cachedFragment in cachedFragments {
+//            let startPercent = CGFloat(cachedFragment.location) / contentLength
+//            let endPercent = CGFloat(cachedFragment.end) / contentLength
+//            percentStrs.append("\(startPercent.formatToPercent())-\(endPercent.formatToPercent())")
+//        }
+//        return "[\(percentStrs.joined(separator: "\n"))]"
+        return cachedPercentRanges.map({ "\($0.lowerBound.formatToPercent())-\($0.upperBound.formatToPercent())" }).joined(separator: "\n")
+    }
+    
+    var cachedPercentRanges: [Range<CGFloat>] {
+        guard let contentInfomation = contentInfomation else { return [] }
         let contentLength = CGFloat(contentInfomation.contentLength)
-        var percentStrs = [String]()
+        var percentRanges = [Range<CGFloat>]()
         for cachedFragment in cachedFragments {
             let startPercent = CGFloat(cachedFragment.location) / contentLength
             let endPercent = CGFloat(cachedFragment.end) / contentLength
-            percentStrs.append("\(startPercent.formatToPercent())-\(endPercent.formatToPercent())")
+            percentRanges.append(startPercent..<endPercent)
         }
-        return "[\(percentStrs.joined(separator: "\n"))]"
+        return percentRanges
     }
     
     
