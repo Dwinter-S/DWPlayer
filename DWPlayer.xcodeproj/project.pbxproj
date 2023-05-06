@@ -130,6 +130,7 @@
 				9A7406BA29EFF7B40076BFBC /* VideoListCell.swift */,
 				9A7406CD29F53E480076BFBC /* VideoPlayerView.swift */,
 				9A7406CF29F53EA50076BFBC /* ListVideoPlayerView.swift */,
+				9A7406ED29F8CFD20076BFBC /* TSqlite.swift */,
 				9A39A0C229EE491D00823C72 /* DWPlayer */,
 				9A39A0B429EE491300823C72 /* Main.storyboard */,
 				9AAF628B2A03B57A0094492C /* MediaList.plist */,
@@ -165,7 +166,6 @@
 				9A39A0D729EE576300823C72 /* URLExtensions.swift */,
 				9A39A0D929EE584700823C72 /* HLSManager.swift */,
 				9A7406EB29F7E05C0076BFBC /* Sqlite.swift */,
-				9A7406ED29F8CFD20076BFBC /* TSqlite.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";

@@ -7,18 +7,6 @@
 
 import Foundation
 
-//class Throttler {
-//    private var task: DispatchWorkItem?
-//    func throttle(time: TimeInterval = 0.5, _ block: @escaping () -> ()) {
-//        self.task?.cancel()
-//        let task = DispatchWorkItem { [weak self] in
-//            block()
-//        }
-//        self.task = task
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time, execute: task)
-//    }
-//}
-
 class Throttler {
     private let queue: DispatchQueue
     private let interval: TimeInterval

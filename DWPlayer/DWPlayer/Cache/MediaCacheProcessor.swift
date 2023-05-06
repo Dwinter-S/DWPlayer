@@ -108,7 +108,6 @@ class MediaCacheProcessor {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name.CachedPercentRangesDidChanged, object: nil, userInfo: ["url": self.url.absoluteString, "ranges" : self.cachedFileInfomation.cachedPercentRanges])
                 }
-                print("?????CachedPercentRangesDidChanged \(self.cachedFileInfomation.cachedPercentRanges)")
             } catch {
                 print("保存数据库失败\(error)")
             }

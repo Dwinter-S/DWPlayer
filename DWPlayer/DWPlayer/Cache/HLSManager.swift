@@ -8,6 +8,7 @@
 import Foundation
 import AVFoundation
 
+@available(iOS 11.0, *)
 class HLSManager: NSObject {
     
     static let shared = HLSManager()
@@ -62,6 +63,7 @@ class HLSManager: NSObject {
     
 }
 
+@available(iOS 11.0, *)
 extension HLSManager: AVAssetDownloadDelegate {
     func urlSession(_ session: URLSession, aggregateAssetDownloadTask: AVAggregateAssetDownloadTask, willDownloadTo location: URL) {
         willDownloadToUrlMap[aggregateAssetDownloadTask] = location

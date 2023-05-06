@@ -8,7 +8,7 @@
 import Foundation
 
 class MediaCache {
-    static let `default` = MediaCache(diskConfig: DiskConfig(name: "default", maxSize: 1024 * 1024 * 120))
+    static let `default` = MediaCache(diskConfig: DiskConfig(name: "default", maxSize: 1024 * 1024 * 80))
     let diskCache: DiskCache
     var db: SQLiteDatabase? {
         return diskCache.db
@@ -90,11 +90,13 @@ class DiskCache {
                     (lastAccessDate as NSDate).timeIntervalSince(expiredDate) < 0 {
                     do {
                         try self.fileManager.removeItem(at: fileURL)
-                        try self.db?.deleteCachedFileInfomation(url: fileURL.lastPathComponent)
+                        try self.db?.deleteCachedFileInfomation(url: fileURL.deletingPathExtension().lastPathComponent)
                         let fileSize = (resourceValues.totalFileAllocatedSize ?? resourceValues.totalFileSize) ?? 0
                         totalDiskCacheByteCount -= fileSize
                         print("删除过期文件: \(fileURL) 大小：\(self.byteCountFormatter(byteCount: fileSize, byteCountFormatterUnit: [.useMB])) 上次访问时间:\(lastAccessDate)")
-                    } catch {}
+                    } catch {
+                        print("删除过期文件失败:\(error)")
+                    }
                 }
             }
             if totalDiskCacheByteCount > self.config.maxSize {
@@ -110,14 +112,16 @@ class DiskCache {
                 for (fileURL, resourceValues) in sortedCachedFiles {
                     do {
                         try self.fileManager.removeItem(at: fileURL)
-                        try self.db?.deleteCachedFileInfomation(url: fileURL.lastPathComponent)
+                        try self.db?.deleteCachedFileInfomation(url: fileURL.deletingPathExtension().lastPathComponent)
                         let fileSize = (resourceValues.totalFileAllocatedSize ?? resourceValues.totalFileSize) ?? 0
                         totalDiskCacheByteCount -= fileSize
                         print("删除文件: \(fileURL) 大小：\(self.byteCountFormatter(byteCount: fileSize, byteCountFormatterUnit: [.useMB]))")
                         if totalDiskCacheByteCount < targetSize {
                             break
                         }
-                    } catch { }
+                    } catch {
+                        print("删除文件失败:\(error)")
+                    }
                 }
             }
             handler?()
