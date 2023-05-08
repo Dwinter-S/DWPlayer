@@ -9,7 +9,7 @@ import UIKit
 
 class ListVideoPlayerView: DWVideoPlayerView {
 
-    let loadingIndicator = UIActivityIndicatorView(style: .large)
+    let loadingIndicator = UIActivityIndicatorView(style: .white)
     
     override func commonInit() {
         super.commonInit()

@@ -17,18 +17,20 @@ class CachingPlayerItem: AVPlayerItem {
     weak var delegate: CachingPlayerItemDelegate?
     var loaders = [String : AssetResourceLoader]()
     
+    
+    /// <#Description#>
     let cacheScheme = "DWMediaCache"
-    let initialURL: URL
+
+    /// the media resource original url.
+    let originalURL: URL
+    
+    /// Initializes a CachingPlayerItem with a URL, which automatically caches media resource.
+    /// - Parameter url: the media resource original url.
     init(url: URL) {
-        self.initialURL = url
+        self.originalURL = url
         if url.pathExtension == "m3u8" {
-            if #available(iOS 11, *) {
-                if let asset = HLSManager.shared.localAsset(with: url) {
-                    super.init(asset: asset, automaticallyLoadedAssetKeys: nil)
-                } else {
-                    super.init(asset: AVURLAsset(url: url), automaticallyLoadedAssetKeys: nil)
-                    HLSManager.shared.downloadStream(for: url)
-                }
+            if let asset = HLSManager.shared.localAsset(with: url) {
+                super.init(asset: asset, automaticallyLoadedAssetKeys: nil)
             } else {
                 super.init(asset: AVURLAsset(url: url), automaticallyLoadedAssetKeys: nil)
             }
@@ -54,7 +56,7 @@ extension CachingPlayerItem: AVAssetResourceLoaderDelegate {
         }
         var loader: AssetResourceLoader? = loaders[url.absoluteString]
         if loader == nil {
-            loader = AssetResourceLoader(url: initialURL)
+            loader = AssetResourceLoader(url: originalURL)
             loader?.delegate = self
             loaders[url.absoluteString] = loader
         }

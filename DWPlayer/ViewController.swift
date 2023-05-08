@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         setupSlider()
         test()
 //        MediaCache.default.diskCache.clearDiskCache()
-        MediaCache.default.diskCache.cleanExpiredDiskCache()
+//        MediaCache.default.diskCache.cleanExpiredDiskCache()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

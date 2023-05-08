@@ -7,7 +7,6 @@
 
 import Foundation
 import AVFoundation
-import CoreServices
 
 protocol AssetResourceLoaderDelegate: AnyObject {
     func loadingRequestDidStartProcessing()

@@ -15,7 +15,7 @@ class DWVideoPlayerToolView: UIView {
         return button
     }()
     
-    let loadingIndicator = UIActivityIndicatorView(style: .medium)
+    let loadingIndicator = UIActivityIndicatorView(style: .white)
 
     override init(frame: CGRect) {
         super.init(frame: frame)

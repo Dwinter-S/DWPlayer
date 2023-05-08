@@ -41,7 +41,6 @@ class DiskCache {
         }
         self.ioQueue = DispatchQueue(label: "com.dwinters.CachingPlayerItem.MediaCache.ioQueue.\(config.name)")
         openDB()
-        cleanExpiredDiskCache()
     }
     
     private func openDB() {

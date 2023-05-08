@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A2ADD2F2A08E1E500B12190 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2ADD2D2A08DB4400B12190 /* MobileCoreServices.framework */; };
 		9A39A0AF29EE491300823C72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A39A0AE29EE491300823C72 /* AppDelegate.swift */; };
-		9A39A0B129EE491300823C72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A39A0B029EE491300823C72 /* SceneDelegate.swift */; };
 		9A39A0B329EE491300823C72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A39A0B229EE491300823C72 /* ViewController.swift */; };
 		9A39A0B629EE491300823C72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A39A0B429EE491300823C72 /* Main.storyboard */; };
 		9A39A0B829EE491400823C72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A39A0B729EE491400823C72 /* Assets.xcassets */; };
@@ -48,9 +48,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9A2ADD2D2A08DB4400B12190 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9A39A0AB29EE491300823C72 /* DWPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DWPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A39A0AE29EE491300823C72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9A39A0B029EE491300823C72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9A39A0B229EE491300823C72 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9A39A0B529EE491300823C72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9A39A0B729EE491400823C72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,17 +95,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A2ADD2F2A08E1E500B12190 /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A2ADD2C2A08DB4400B12190 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9A2ADD2D2A08DB4400B12190 /* MobileCoreServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9A39A0A229EE491300823C72 = {
 			isa = PBXGroup;
 			children = (
 				9A39A0AD29EE491300823C72 /* DWPlayer */,
 				9A39A0AC29EE491300823C72 /* Products */,
+				9A2ADD2C2A08DB4400B12190 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,7 +132,6 @@
 			children = (
 				9A7406BE29F231E30076BFBC /* DWConstraint */,
 				9A39A0AE29EE491300823C72 /* AppDelegate.swift */,
-				9A39A0B029EE491300823C72 /* SceneDelegate.swift */,
 				9A39A0B229EE491300823C72 /* ViewController.swift */,
 				9AAF628F2A04C4D80094492C /* MediaListCell.swift */,
 				9AAF628D2A03B8040094492C /* MediaManager.swift */,
@@ -289,7 +298,6 @@
 				9AAF628E2A03B8040094492C /* MediaManager.swift in Sources */,
 				9A7406C229F232570076BFBC /* ConstraintsCreator.swift in Sources */,
 				9A39A0D229EE4C4100823C72 /* MediaCacheProcessor.swift in Sources */,
-				9A39A0B129EE491300823C72 /* SceneDelegate.swift in Sources */,
 				9A7406EE29F8CFD20076BFBC /* TSqlite.swift in Sources */,
 				9A7406D229F672A90076BFBC /* Throttler.swift in Sources */,
 				9A39A0DC29EE677C00823C72 /* DWPlayer.swift in Sources */,
@@ -384,7 +392,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -438,7 +446,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -465,7 +473,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -496,7 +504,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

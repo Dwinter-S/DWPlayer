@@ -54,6 +54,7 @@ class LoadingRequestProcessor: NSObject {
             
             let range = NSRange(location: offset, length: length)
             loadingTasks = getLoadingTasksFor(range: range)
+//            loadingTasks = [LoadingTask(taskType: .remote, range: range)]
             
         }
     }
@@ -103,6 +104,7 @@ class LoadingRequestProcessor: NSObject {
         if loadingTask.taskType == .local {
             cacheProcessor.cachedDataFor(range: loadingTask.range) { [weak self] data in
                 guard let self = self else { return }
+                print("！！！l:\(Thread.current) \(Thread.isMainThread)")
                 if let data = data {
                     self.fillInContentInformationRequest(self.loadingRequest.contentInformationRequest, response: nil)
                     self.loadingRequest.dataRequest?.respond(with: data)
@@ -126,7 +128,6 @@ class LoadingRequestProcessor: NSObject {
     
     func cancelTasks() {
         session.invalidateAndCancel()
-        isCancelled = true
     }
     
     func fillInContentInformationRequest(_ contentInformationRequest: AVAssetResourceLoadingContentInformationRequest?, response: URLResponse?) {
@@ -139,8 +140,7 @@ class LoadingRequestProcessor: NSObject {
         if let httpResponse = response as? HTTPURLResponse {
             let contentInfomation = ResourceContentInfomation()
             let acceptRange = httpResponse.allHeaderFields["Accept-Ranges"] as? String
-//            contentInfomation.isByteRangeAccessSupported = acceptRange == "bytes"
-            contentInfomation.isByteRangeAccessSupported = true
+            contentInfomation.isByteRangeAccessSupported = acceptRange == "bytes"
             var contentLength = 0
             var contentRange = httpResponse.allHeaderFields["content-range"] as? String
             contentRange = contentRange ?? httpResponse.allHeaderFields["Content-Range"] as? String
@@ -192,6 +192,10 @@ class LoadingRequestProcessor: NSObject {
 
 extension LoadingRequestProcessor: URLSessionDataDelegate {
     
+    func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
+        isCancelled = true
+    }
+    
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }
@@ -218,6 +222,7 @@ extension LoadingRequestProcessor: URLSessionDataDelegate {
         if error != nil {
             finishLoadingRequest(loadingRequest, error: nil)
         } else {
+            print("！！！r:\(Thread.current) \(Thread.isMainThread)")
             processTasks()
         }
     }
