@@ -19,6 +19,7 @@ class LoadingRequestProcessor: NSObject {
     let url: URL
     let loadingRequest: AVAssetResourceLoadingRequest
     let cacheProcessor: MediaCacheProcessor
+    let taskQueue: DispatchQueue
     
     var loadingTasks: [LoadingTask] = []
     var cacheOffset: Int = 0
@@ -41,6 +42,7 @@ class LoadingRequestProcessor: NSObject {
         self.loadingRequest = loadingRequest
         self.cacheProcessor = cacheProcessor
         self.delegate = delegate
+        self.taskQueue = DispatchQueue(label: "com.dwinters.CachingPlayerItem.MediaCache.taskQueue.\(url.absoluteString.md5)")
         super.init()
         if let dataRequest = loadingRequest.dataRequest {
             var offset = Int(dataRequest.requestedOffset)
@@ -92,6 +94,12 @@ class LoadingRequestProcessor: NSObject {
         return tasks
     }
     
+    func startProcess() {
+        taskQueue.async { [weak self] in
+            self?.processTasks()
+        }
+    }
+    
     func processTasks() {
         guard !isCancelled else {
             return
@@ -104,11 +112,10 @@ class LoadingRequestProcessor: NSObject {
         if loadingTask.taskType == .local {
             cacheProcessor.cachedDataFor(range: loadingTask.range) { [weak self] data in
                 guard let self = self else { return }
-                print("！！！l:\(Thread.current) \(Thread.isMainThread)")
                 if let data = data {
                     self.fillInContentInformationRequest(self.loadingRequest.contentInformationRequest, response: nil)
                     self.loadingRequest.dataRequest?.respond(with: data)
-                    self.processTasks()
+                    self.startProcess()
                 } else {
                     
                 }
@@ -127,7 +134,10 @@ class LoadingRequestProcessor: NSObject {
     }
     
     func cancelTasks() {
-        session.invalidateAndCancel()
+        taskQueue.async { [weak self] in
+            self?.session.invalidateAndCancel()
+            self?.isCancelled = true
+        }
     }
     
     func fillInContentInformationRequest(_ contentInformationRequest: AVAssetResourceLoadingContentInformationRequest?, response: URLResponse?) {
@@ -192,10 +202,6 @@ class LoadingRequestProcessor: NSObject {
 
 extension LoadingRequestProcessor: URLSessionDataDelegate {
     
-    func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
-        isCancelled = true
-    }
-    
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }
@@ -222,8 +228,7 @@ extension LoadingRequestProcessor: URLSessionDataDelegate {
         if error != nil {
             finishLoadingRequest(loadingRequest, error: nil)
         } else {
-            print("！！！r:\(Thread.current) \(Thread.isMainThread)")
-            processTasks()
+            startProcess()
         }
     }
     

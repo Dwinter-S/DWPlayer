@@ -24,28 +24,19 @@ class CachedFileInfomation: Codable {
     var cachedFragments: [NSRange] {
         get {
             var res: [NSRange] = []
-            writeReadQueue.sync { [unowned self] in
-                res = self._cachedFragments
+            writeReadQueue.sync { [weak self] in
+                res = self?._cachedFragments ?? []
             }
             return res
         }
         set {
-            writeReadQueue.async(group: nil, qos: .default, flags: .barrier) { [unowned self] in
-                self._cachedFragments = newValue
+            writeReadQueue.async(group: nil, qos: .default, flags: .barrier) { [weak self] in
+                self?._cachedFragments = newValue
             }
         }
     }
     
     var cachedPercentsString: String {
-//        guard let contentInfomation = contentInfomation else { return "" }
-//        let contentLength = CGFloat(contentInfomation.contentLength)
-//        var percentStrs = [String]()
-//        for cachedFragment in cachedFragments {
-//            let startPercent = CGFloat(cachedFragment.location) / contentLength
-//            let endPercent = CGFloat(cachedFragment.end) / contentLength
-//            percentStrs.append("\(startPercent.formatToPercent())-\(endPercent.formatToPercent())")
-//        }
-//        return "[\(percentStrs.joined(separator: "\n"))]"
         return cachedPercentRanges.map({ "\($0.lowerBound.formatToPercent())-\($0.upperBound.formatToPercent())" }).joined(separator: "\n")
     }
     

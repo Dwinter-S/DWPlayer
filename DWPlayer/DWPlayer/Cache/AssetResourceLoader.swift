@@ -37,7 +37,7 @@ class AssetResourceLoader: NSObject {
                                                            delegate: self)
             requestProcessors.insert(requestProcessor)
             delegate?.loadingRequestDidStartProcessing()
-            requestProcessor.processTasks()
+            requestProcessor.startProcess()
         }
     }
     
